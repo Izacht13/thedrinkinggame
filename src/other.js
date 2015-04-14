@@ -1,0 +1,1 @@
+b="javascript is cool!";
