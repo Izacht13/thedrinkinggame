@@ -1,8 +1,8 @@
 "use strict";
 
 require("angular").module("home", [])
-.directive("home", function() {
+.directive("appHome", function() {
   return {
-    templateUrl:"fragment.html"
+    templateUrl:"home.html"
   };
 });

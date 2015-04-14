@@ -1,3 +1,3 @@
-//window.fs=require('fs');
+//require("jquery")
 require("./angular-pages/app");
 

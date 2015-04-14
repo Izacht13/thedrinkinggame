@@ -1,1 +1,1 @@
-var angular=require("angular"); angular.module("templateCache", []).run(["$templateCache", function($templateCache) {$templateCache.put("fragment.html","<span>text</span>\r\n");}]);
+var angular=require("angular"); angular.module("templateCache", []).run(["$templateCache", function($templateCache) {$templateCache.put("home.html","<div class=\"type-transcribe\" contentEditable=\"true\"></div>\r\n");}]);

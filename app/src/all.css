@@ -1,2 +1,8 @@
-.hello {
-  color: green; }
+.type-transcribe {
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+  width: 90%;
+  height: 300px;
+  font-size: 40px;
+  background: orange; }
