@@ -3,7 +3,7 @@
 require("./angular-pages/app");
 
 
-//# sourceURL=F:/thedrinkinggame/src/main.js
+//# sourceURL=D:/thedrinkinggame/src/main.js
 },{"./angular-pages/app":7}],2:[function(require,module,exports){
 "use strict";
 (function(Q, W, t) {
@@ -7290,14 +7290,14 @@ require("./angular-pages/app");
 !window.angular.$$csp() && window.angular.element(document).find("head").prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
 
 
-//# sourceURL=F:/thedrinkinggame/node_modules/angular/angular.min.js
+//# sourceURL=D:/thedrinkinggame/node_modules/angular/angular.min.js
 },{}],3:[function(require,module,exports){
 "use strict";
 require('./angular.min.js');
 module.exports = angular;
 
 
-//# sourceURL=F:/thedrinkinggame/node_modules/angular/index.js
+//# sourceURL=D:/thedrinkinggame/node_modules/angular/index.js
 },{"./angular.min.js":2}],4:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
@@ -10163,25 +10163,35 @@ require("./templates");
 require("angular").module("app", ["home", "templateCache"]);
 
 
-//# sourceURL=F:/thedrinkinggame/src/angular-pages/app.js
+//# sourceURL=D:/thedrinkinggame/src/angular-pages/app.js
 },{"./home":8,"./templates":9,"angular":3}],8:[function(require,module,exports){
 "use strict";
 "use strict";
 require("angular").module("home", []).directive("appHome", function() {
-  return {templateUrl: "home.html"};
+  return {
+    restrict: "E",
+    templateUrl: "home.html"
+  };
+}).directive("alwaysFocused", function() {
+  return {
+    restrict: "A",
+    link: function(scope, element) {
+      element.on('$destroy', function() {});
+    }
+  };
 });
 
 
-//# sourceURL=F:/thedrinkinggame/src/angular-pages/home.js
+//# sourceURL=D:/thedrinkinggame/src/angular-pages/home.js
 },{"angular":3}],9:[function(require,module,exports){
 "use strict";
 var angular = require("angular");
 angular.module("templateCache", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("home.html", "<div class=\"type-transcribe\" contentEditable=\"true\"></div>\r\n");
+  $templateCache.put("home.html", "<div class=\"type-transcribe\" always-focused contentEditable=\"true\"></div>\r\n");
 }]);
 
 
-//# sourceURL=F:/thedrinkinggame/src/angular-pages/templates.js
+//# sourceURL=D:/thedrinkinggame/src/angular-pages/templates.js
 },{"angular":3}]},{},[1,6]);
 
 //# sourceMappingURL=../src/main.js.map
