@@ -10250,7 +10250,8 @@ require("angular").module("app", ["home", "templateCache"]);
 },{"./home":10,"./templateCache":12,"angular":3}],9:[function(require,module,exports){
 "use strict";
 "use strict";
-require("angular").module("banners", []).directive("appBanners", function() {
+require("./submiter");
+require("angular").module("banners", ["submiter"]).directive("appBanners", function() {
   return {
     restrict: "E",
     controller: "bannersController",
@@ -10297,7 +10298,16 @@ require("angular").module("banners", []).directive("appBanners", function() {
       return inputActive;
     }
   };
-}).directive("customBannerButton", ["customBanner", function(customBanner) {
+}).directive("bannerButton", ["submiter", function(submiter) {
+  return {
+    restrict: "A",
+    link: function(scope, element) {
+      element.on("click", function() {
+        submiter.submitBanner(scope.bannerButton);
+      });
+    }
+  };
+}]).directive("customBannerButton", ["customBanner", function(customBanner) {
   return {
     restrict: "A",
     link: function(scope, element) {
@@ -10310,7 +10320,7 @@ require("angular").module("banners", []).directive("appBanners", function() {
 
 
 //# sourceURL=D:/thedrinkinggame/src/angular-modules/banners.js
-},{"angular":3}],10:[function(require,module,exports){
+},{"./submiter":11,"angular":3}],10:[function(require,module,exports){
 "use strict";
 "use strict";
 require("./submiter");
@@ -10364,6 +10374,7 @@ require("angular").module("home", ["submiter", "actors", "banners"]).directive("
 "use strict";
 require("./actors");
 require("angular").module("submiter", ["actors"]).factory("submiter", ["actors", "customBanner", function(actors, customBanner) {
+  var socket = io();
   return {
     submitText: function(element) {
       if (!element.textContent) {
@@ -10371,16 +10382,22 @@ require("angular").module("submiter", ["actors"]).factory("submiter", ["actors",
         return false;
       }
       if (actors.currentActor && actors.currentActor !== actors.noOne) {
-        alert(actors.currentActor.name + ": " + element.textContent);
+        socket.emit('quote', {
+          actor: actors.currentActor,
+          quote: element.textContent
+        });
       } else {
-        alert(element.textContent);
+        socket.emit('quote', {quote: element.textContent});
       }
       element.textContent = "";
       actors.pickNoOne();
     },
+    submitBanner: function(banner) {
+      socket.emit('banner', banner);
+    },
     submitCustomBannerUrl: function(element) {
+      socket.emit('banner', {image: element.textContent});
       customBanner.toggleInputActivationStatus();
-      alert("image submited: " + element.textContent);
       element.textContent = "";
     }
   };
@@ -10393,7 +10410,7 @@ require("angular").module("submiter", ["actors"]).factory("submiter", ["actors",
 var angular = require("angular");
 angular.module("templateCache", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("actors.html", "<div class=\"actors-block\">\r\n    <div class=\"actor-image-wrapper\" ng-repeat=\"actor in actors track by $index\">\r\n        {{($index+1)}}\r\n        <img actor-image ng-src=\"{{actor.image}}\" ng-class=\"{\'actor-image-not-selected\':!isActorSelected(actor)}\" />\r\n    </div>\r\n</div>\r\n");
-  $templateCache.put("banners.html", "<button ng-repeat=\"bannerButton in bannerButtons track by $index\" class=\"banner-button\">{{bannerButton.title}}</button>\r\n<button custom-banner-button class=\"banner-button\">Custom</button>\r\n");
+  $templateCache.put("banners.html", "<button ng-repeat=\"bannerButton in bannerButtons track by $index\" banner-button class=\"banner-button\">{{bannerButton.title}}</button>\r\n<button custom-banner-button class=\"banner-button\">Custom</button>\r\n");
   $templateCache.put("home.html", "<app-banners></app-banners>\r\n<app-actors></app-actors>\r\n<div class=\"type-transcribe\" placeholder=\"\" always-focused contentEditable=\"true\"></div>\r\n");
 }]);
 

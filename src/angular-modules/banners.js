@@ -1,6 +1,8 @@
 "use strict";
 
-require("angular").module("banners", [])
+require("./submiter");
+
+require("angular").module("banners", ["submiter"])
 .directive("appBanners", function(){
   return {
     restrict:"E",
@@ -63,6 +65,16 @@ require("angular").module("banners", [])
     }
   };
 })
+.directive("bannerButton", ["submiter", function(submiter){
+  return {
+    restrict:"A",
+    link:function(scope, element){
+      element.on("click", function(){
+        submiter.submitBanner(scope.bannerButton);
+      });
+    }
+  };
+}])
 .directive("customBannerButton", ["customBanner", function(customBanner){
   return {
     restrict:"A",

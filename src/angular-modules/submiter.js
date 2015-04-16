@@ -4,6 +4,9 @@ require("./actors");
 
 require("angular").module("submiter", ["actors"])
 .factory("submiter", ["actors", "customBanner", function(actors, customBanner){
+
+  var socket=io();
+
   return {
     submitText:function (element){
 
@@ -13,17 +16,20 @@ require("angular").module("submiter", ["actors"])
       }
 
       if (actors.currentActor && actors.currentActor!==actors.noOne){
-        alert(actors.currentActor.name+": "+element.textContent);
+        socket.emit('quote', {actor:actors.currentActor, quote:element.textContent});
       }
       else{
-        alert(element.textContent);
+        socket.emit('quote', {quote:element.textContent});
       }
       element.textContent="";
       actors.pickNoOne();
     },
+    submitBanner:function(banner){
+      socket.emit('banner', banner);
+    },
     submitCustomBannerUrl:function(element){
+      socket.emit('banner', {image:element.textContent});
       customBanner.toggleInputActivationStatus();
-      alert("image submited: "+element.textContent);
       element.textContent="";
     }
   };
