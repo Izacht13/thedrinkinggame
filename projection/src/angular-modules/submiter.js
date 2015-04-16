@@ -12,14 +12,14 @@ require("angular").module("submiter", ["actors"])
         return false;
       }
 
-      if (actors.currentActor && actors.currentActor!==actors.noOne){
+      if (actors.currentActor){
         alert(actors.currentActor.name+": "+element.textContent);
       }
       else{
         alert(element.textContent);
       }
       element.textContent="";
-      actors.pickNoOne();
+      actors.currentActor=null;
     },
     submitCustomBannerUrl:function(element){
       customBanner.toggleInputActivationStatus();

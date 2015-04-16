@@ -38,14 +38,9 @@ angular.module("actors", [])
       name:"Nadja",
       image:"img/nadja.png"
     },
-    {
-      name:"No one",
-      image:"img/noone.png"
-    },
+
   ];
 
-
-  var noOne=actors[actors.length-1];
 
   return {
     actors,
@@ -60,13 +55,7 @@ angular.module("actors", [])
     setCurrentActorByIndex:function(index){
       this.currentActor=actors[index];
     },
-    currentActor:actors[actors.length-1],
-    pickNoOne:function(){
-      this.currentActor=noOne;
-    },
-    get noOne(){
-      return noOne;
-    }
+    currentActor:null
   };
 })
 .directive("appActors", function(actors){

@@ -3,7 +3,7 @@
 require("./angular-modules/app");
 
 
-//# sourceURL=D:/thedrinkinggame/src/main.js
+//# sourceURL=D:/thedrinkinggame/projection/src/main.js
 },{"./angular-modules/app":8}],2:[function(require,module,exports){
 "use strict";
 (function(Q, W, t) {
@@ -10184,11 +10184,7 @@ angular.module("actors", []).factory("actors", function() {
   }, {
     name: "Nadja",
     image: "img/nadja.png"
-  }, {
-    name: "No one",
-    image: "img/noone.png"
   }];
-  var noOne = actors[actors.length - 1];
   return {
     actors: actors,
     setCurrentActorByImage: function(url) {
@@ -10202,13 +10198,7 @@ angular.module("actors", []).factory("actors", function() {
     setCurrentActorByIndex: function(index) {
       this.currentActor = actors[index];
     },
-    currentActor: actors[actors.length - 1],
-    pickNoOne: function() {
-      this.currentActor = noOne;
-    },
-    get noOne() {
-      return noOne;
-    }
+    currentActor: null
   };
 }).directive("appActors", function(actors) {
   return {
@@ -10237,7 +10227,7 @@ angular.module("actors", []).factory("actors", function() {
 }]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/actors.js
+//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/actors.js
 },{"angular":3}],8:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -10246,7 +10236,7 @@ require("./templateCache");
 require("angular").module("app", ["home", "templateCache"]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/app.js
+//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/app.js
 },{"./home":10,"./templateCache":12,"angular":3}],9:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -10309,7 +10299,7 @@ require("angular").module("banners", []).directive("appBanners", function() {
 }]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/banners.js
+//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/banners.js
 },{"angular":3}],10:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -10345,7 +10335,7 @@ require("angular").module("home", ["submiter", "actors", "banners"]).directive("
           e.preventDefault();
           scope.$apply(function() {
             if (e.keyCode === 48) {
-              actors.setCurrentActorByIndex(8);
+              actors.setCurrentActorByIndex(10);
             } else {
               actors.setCurrentActorByIndex(e.keyCode - 49);
             }
@@ -10358,7 +10348,7 @@ require("angular").module("home", ["submiter", "actors", "banners"]).directive("
 }]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/home.js
+//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/home.js
 },{"./actors":7,"./banners":9,"./submiter":11,"angular":3}],11:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -10370,13 +10360,13 @@ require("angular").module("submiter", ["actors"]).factory("submiter", ["actors",
         element.textContent = "";
         return false;
       }
-      if (actors.currentActor && actors.currentActor !== actors.noOne) {
+      if (actors.currentActor) {
         alert(actors.currentActor.name + ": " + element.textContent);
       } else {
         alert(element.textContent);
       }
       element.textContent = "";
-      actors.pickNoOne();
+      actors.currentActor = null;
     },
     submitCustomBannerUrl: function(element) {
       customBanner.toggleInputActivationStatus();
@@ -10387,7 +10377,7 @@ require("angular").module("submiter", ["actors"]).factory("submiter", ["actors",
 }]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/submiter.js
+//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/submiter.js
 },{"./actors":7,"angular":3}],12:[function(require,module,exports){
 "use strict";
 var angular = require("angular");
@@ -10398,7 +10388,7 @@ angular.module("templateCache", []).run(["$templateCache", function($templateCac
 }]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/templateCache.js
+//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/templateCache.js
 },{"angular":3}]},{},[1,6]);
 
 //# sourceMappingURL=../src/main.js.map

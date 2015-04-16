@@ -38,7 +38,7 @@ require("angular").module("home", ["submiter", "actors", "banners"])
           e.preventDefault();
           scope.$apply(function(){
             if (e.keyCode===48){
-              actors.setCurrentActorByIndex(8);
+              actors.setCurrentActorByIndex(10);
             }
             else{
               actors.setCurrentActorByIndex(e.keyCode-49);
