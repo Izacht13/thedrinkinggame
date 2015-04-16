@@ -12,6 +12,8 @@ var gulp = require('gulp'),
     es6ify = require('es6ify'),
     templateCache = require("gulp-angular-templatecache");
 
+    es6ify.configure(/^(?!.*node_modules)+.+\.js$/);
+
 var main = require("./package.json").main;
 watchify.args.fullPaths=false;
 
@@ -54,8 +56,8 @@ var templateOptions = {
 
 gulp.task('templateCache', function(){
    return gulp.src(["src/templates/**/*.html", "src/templates/**/*.htm"])
-       .pipe(templateCache("templates.js", templateOptions))
-       .pipe(gulp.dest("src/angular-pages"));
+       .pipe(templateCache("templateCache.js", templateOptions))
+       .pipe(gulp.dest("src/angular-modules"));
 });
 
 gulp.task('watch', function() {

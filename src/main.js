@@ -1,1 +1,1 @@
-require("./angular-pages/app");
+require("./angular-modules/app");

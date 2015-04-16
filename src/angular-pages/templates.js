@@ -1,1 +1,0 @@
-var angular=require("angular"); angular.module("templateCache", []).run(["$templateCache", function($templateCache) {$templateCache.put("home.html","<div class=\"type-transcribe\" always-focused contentEditable=\"true\"></div>\r\n");}]);

@@ -1,6 +1,6 @@
 "use strict";
 
 require("./home");
-require("./templates");
+require("./templateCache");
 
 require("angular").module("app", ["home", "templateCache"]);
