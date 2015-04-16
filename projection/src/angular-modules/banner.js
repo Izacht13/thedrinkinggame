@@ -11,7 +11,9 @@ require("angular").module("banner", ["receiver"])
     link:function(scope, element){
 
       function receiverCallback(data){
-        alert("banner event");
+        scope.$apply(function(){
+          scope.bannerStyle["background-image"]="url("+data.image+")";
+        });
       }
 
       receiver.registerBannerReceiver(receiverCallback);
@@ -24,5 +26,5 @@ require("angular").module("banner", ["receiver"])
   };
 }])
 .controller("bannerController", ["$scope", function($scope){
-  $scope.bannerStyle={};
+  $scope.bannerStyle={"background-image": "url()"};
 }]);

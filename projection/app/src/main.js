@@ -10175,7 +10175,9 @@ require("angular").module("banner", ["receiver"]).directive("appBanner", ["recei
     controller: "bannerController",
     link: function(scope, element) {
       function receiverCallback(data) {
-        alert("banner event");
+        scope.$apply(function() {
+          scope.bannerStyle["background-image"] = "url(" + data.image + ")";
+        });
       }
       receiver.registerBannerReceiver(receiverCallback);
       element.on("$destroy", function() {
@@ -10184,7 +10186,7 @@ require("angular").module("banner", ["receiver"]).directive("appBanner", ["recei
     }
   };
 }]).controller("bannerController", ["$scope", function($scope) {
-  $scope.bannerStyle = {};
+  $scope.bannerStyle = {"background-image": "url()"};
 }]);
 
 
