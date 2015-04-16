@@ -10176,7 +10176,7 @@ require("angular").module("banner", ["receiver"]).directive("appBanner", ["recei
     link: function(scope, element) {
       function receiverCallback(data) {
         scope.$apply(function() {
-          scope.bannerStyle["background-image"] = "url(" + data.image + ")";
+          scope.bannerUrl = data.image;
         });
       }
       receiver.registerBannerReceiver(receiverCallback);
@@ -10186,7 +10186,7 @@ require("angular").module("banner", ["receiver"]).directive("appBanner", ["recei
     }
   };
 }]).controller("bannerController", ["$scope", function($scope) {
-  $scope.bannerStyle = {"background-image": "url()"};
+  $scope.bannerUrl = "img/banners/sjkdsjdks.png";
 }]);
 
 
@@ -10256,7 +10256,7 @@ require("angular").module("receiver", []).factory("receiver", function() {
 "use strict";
 var angular = require("angular");
 angular.module("templateCache", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("banner.html", "<div class=\"banner\" ng-style=\"bannerStyle\"></div>\r\n");
+  $templateCache.put("banner.html", "<div class=\"banner\">\r\n    <img ng-src=\"{{bannerUrl}}\" />\r\n</div>\r\n");
   $templateCache.put("home.html", "<app-banner></app-banner>\r\n<app-quotes></app-quotes>\r\n");
   $templateCache.put("quotes.html", "quotes\r\n");
 }]);

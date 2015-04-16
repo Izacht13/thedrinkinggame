@@ -5,6 +5,11 @@ var express=require("express"),
 app.use(express.static(path.join(__dirname, '/app')));
 app.use("/transcribe", express.static(path.join(__dirname, '../app')));
 
+app.get("/img/banners/*.png", function(req, res){
+  console.log("banner not found");
+  res.sendFile(path.join(__dirname, '/app/img/banners/unknown.png'));
+});
+
 var server=app.listen(80),
     io=require("socket.io").listen(server);
 

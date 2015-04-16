@@ -12,7 +12,7 @@ require("angular").module("banner", ["receiver"])
 
       function receiverCallback(data){
         scope.$apply(function(){
-          scope.bannerStyle["background-image"]="url("+data.image+")";
+          scope.bannerUrl=data.image;
         });
       }
 
@@ -26,5 +26,5 @@ require("angular").module("banner", ["receiver"])
   };
 }])
 .controller("bannerController", ["$scope", function($scope){
-  $scope.bannerStyle={"background-image": "url()"};
+  $scope.bannerUrl="img/banners/sjkdsjdks.png";
 }]);
