@@ -10269,8 +10269,29 @@ require("angular").module("banners", ["submiter"]).directive("appBanners", funct
     title: "Watergate",
     image: "img/banners/watergate.png"
   }, {
-    title: "Something",
-    image: "img/banners/something.png"
+    title: "Speed Round",
+    image: "img/banners/speedround.png"
+  }, {
+    title: "Disco Round",
+    image: "img/banners/discoround.png"
+  }, {
+    title: "Interrogation",
+    image: "img/banners/interrogation.png"
+  }, {
+    title: "Jay Whitehead",
+    image: "img/banners/jaywhitehead.png"
+  }, {
+    title: "Bell of Silence",
+    image: "img/banners/bellofsilence.png"
+  }, {
+    title: "Sociable!",
+    image: "img/banners/sociable.png"
+  }, {
+    title: "Here's lookin' at you, kid",
+    image: "img/banners/hereslookinatyoukid.png"
+  }, {
+    title: "Boomerang",
+    image: "img/banners/boomerang.png"
   }];
 }]).factory("customBanner", function() {
   var inputElement = null,
@@ -10410,7 +10431,7 @@ require("angular").module("submiter", ["actors"]).factory("submiter", ["actors",
 var angular = require("angular");
 angular.module("templateCache", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("actors.html", "<div class=\"actors-block\">\r\n    <div class=\"actor-image-wrapper\" ng-repeat=\"actor in actors track by $index\">\r\n        {{($index+1)}}\r\n        <img actor-image ng-src=\"{{actor.image}}\" ng-class=\"{\'actor-image-not-selected\':!isActorSelected(actor)}\" />\r\n    </div>\r\n</div>\r\n");
-  $templateCache.put("banners.html", "<button ng-repeat=\"bannerButton in bannerButtons track by $index\" banner-button class=\"banner-button\">{{bannerButton.title}}</button>\r\n<button custom-banner-button class=\"banner-button\">Custom</button>\r\n");
+  $templateCache.put("banners.html", "<button ng-repeat=\"bannerButton in bannerButtons track by $index\" banner-button class=\"banner-button\">{{bannerButton.title}}</button>\r\n<button custom-banner-button class=\"banner-button custom\">Custom</button>\r\n");
   $templateCache.put("home.html", "<app-banners></app-banners>\r\n<app-actors></app-actors>\r\n<div class=\"type-transcribe\" placeholder=\"\" always-focused contentEditable=\"true\"></div>\r\n");
 }]);
 

@@ -28,9 +28,37 @@ require("angular").module("banners", ["submiter"])
       image:"img/banners/watergate.png"
     },
     {
-      title:"Something",
-      image:"img/banners/something.png"
+      title:"Speed Round",
+      image:"img/banners/speedround.png"
     },
+    {
+      title:"Disco Round",
+      image:"img/banners/discoround.png"
+    },
+    {
+      title:"Interrogation",
+      image:"img/banners/interrogation.png"
+    },
+    {
+      title:"Jay Whitehead",
+      image:"img/banners/jaywhitehead.png"
+    },
+    {
+      title:"Bell of Silence",
+      image:"img/banners/bellofsilence.png"
+    },
+    {
+      title:"Sociable!",
+      image:"img/banners/sociable.png"
+    },
+    {
+      title:"Here's lookin' at you, kid",
+      image:"img/banners/hereslookinatyoukid.png"
+    },
+    {
+      title:"Boomerang",
+      image:"img/banners/boomerang.png"
+    }
   ];
 
 }])
