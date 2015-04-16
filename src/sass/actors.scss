@@ -11,6 +11,7 @@ $image-size:150px;
 
 .actor-image-wrapper{
   @extend unselectable;
+  @extend global-font;
   width:$image-size;
   height:$image-size;
   display:inline-block;

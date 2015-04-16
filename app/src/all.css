@@ -32,7 +32,7 @@ unselectable, .actor-image-wrapper, .actor-image-wrapper img {
   opacity: 0.3; }
 
 global-font, .banner-button {
-  font-family: helvica; }
+  font-family: "Open Sans"; }
 
 .banner-button {
   outline: 0;
@@ -66,7 +66,7 @@ body {
   text-align: center; }
 
 global-font, .type-transcribe {
-  font-family: helvica; }
+  font-family: "Open Sans"; }
 
 .type-transcribe {
   position: absolute;
@@ -77,7 +77,6 @@ global-font, .type-transcribe {
   font-size: 60px;
   background: white;
   outline: none;
-  font-family: Helvica;
   text-align: center; }
 
 .type-transcribe:empty:before {

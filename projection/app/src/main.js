@@ -4,7 +4,7 @@ require("./angular-modules/app");
 
 
 //# sourceURL=D:/thedrinkinggame/projection/src/main.js
-},{"./angular-modules/app":8}],2:[function(require,module,exports){
+},{"./angular-modules/app":7}],2:[function(require,module,exports){
 "use strict";
 (function(Q, W, t) {
   'use strict';
@@ -10158,233 +10158,105 @@ System.get("traceur-runtime@0.0.79/src/runtime/polyfills/polyfills.js" + '');
 },{"_process":5,"path":4}],7:[function(require,module,exports){
 "use strict";
 "use strict";
-var angular = require("angular");
-angular.module("actors", []).factory("actors", function() {
-  var actors = [{
-    name: "GaRRy",
-    image: "img/garry.png"
-  }, {
-    name: "Paige",
-    image: "img/paige.png"
-  }, {
-    name: "Lindsay",
-    image: "img/lindsay.png"
-  }, {
-    name: "Ethan",
-    image: "img/ethan.png"
-  }, {
-    name: "Beyata",
-    image: "img/beyata.png"
-  }, {
-    name: "Cathie",
-    image: "img/cathie.png"
-  }, {
-    name: "Spencer",
-    image: "img/spencer.png"
-  }, {
-    name: "Nadja",
-    image: "img/nadja.png"
-  }];
-  return {
-    actors: actors,
-    setCurrentActorByImage: function(url) {
-      actors.some(function(item) {
-        if (url.includes(item.image)) {
-          this.currentActor = item;
-          return true;
-        }
-      }, this);
-    },
-    setCurrentActorByIndex: function(index) {
-      this.currentActor = actors[index];
-    },
-    currentActor: null
-  };
-}).directive("appActors", function(actors) {
-  return {
-    restrict: "E",
-    controller: "actorController",
-    templateUrl: "actors.html"
-  };
-}).directive("actorImage", ["actors", function(actors) {
-  return {
-    restrict: "A",
-    link: function(scope, element) {
-      element.on("click", function(e) {
-        var $__0 = this;
-        e.preventDefault();
-        scope.$apply((function() {
-          actors.setCurrentActorByImage($__0.src);
-        }));
-      });
-    }
-  };
-}]).controller("actorController", ["$scope", "actors", function($scope, actors) {
-  $scope.actors = actors.actors;
-  $scope.isActorSelected = function(actor) {
-    return actors.currentActor === actor;
-  };
-}]);
-
-
-//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/actors.js
-},{"angular":3}],8:[function(require,module,exports){
-"use strict";
-"use strict";
 require("./home");
 require("./templateCache");
 require("angular").module("app", ["home", "templateCache"]);
 
 
 //# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/app.js
-},{"./home":10,"./templateCache":12,"angular":3}],9:[function(require,module,exports){
+},{"./home":9,"./templateCache":12,"angular":3}],8:[function(require,module,exports){
 "use strict";
 "use strict";
-require("angular").module("banners", []).directive("appBanners", function() {
+require("./receiver");
+require("angular").module("banner", ["receiver"]).directive("appBanner", ["receiver", function(receiver) {
   return {
     restrict: "E",
-    controller: "bannersController",
-    templateUrl: "banners.html",
-    link: function(scope, element) {}
-  };
-}).controller("bannersController", ["$scope", function($scope) {
-  $scope.bannerButtons = [{
-    title: "The Drinking Game",
-    image: "img/banners/thedrinkinggame.png"
-  }, {
-    title: "Hemingway",
-    image: "img/banners/hemingway.png"
-  }, {
-    title: "Watergate",
-    image: "img/banners/watergate.png"
-  }, {
-    title: "Something",
-    image: "img/banners/something.png"
-  }];
-}]).factory("customBanner", function() {
-  var inputElement = null,
-      inputActive = false,
-      buttonThatCalled = null;
-  function toggleButton(element) {
-    element[0].textContent = (element[0].textContent === "Cancel") ? "Custom" : "Cancel";
-    if (element[0].textContent === "Cancel") {
-      element.addClass("cancel-button");
-    } else {
-      element.removeClass("cancel-button");
-    }
-  }
-  return {
-    registerInputElement: function(element) {
-      inputElement = element;
-    },
-    toggleInputActivationStatus: function(ele) {
-      buttonThatCalled = ele || buttonThatCalled;
-      toggleButton(buttonThatCalled);
-      inputActive = !inputActive;
-      inputElement.attr("placeholder", (inputElement.attr("placeholder")) ? "" : "Please enter a direct link to an image");
-    },
-    get inputActive() {
-      return inputActive;
-    }
-  };
-}).directive("customBannerButton", ["customBanner", function(customBanner) {
-  return {
-    restrict: "A",
+    templateUrl: "banner.html",
+    controller: "bannerController",
     link: function(scope, element) {
-      element.on("click", function() {
-        customBanner.toggleInputActivationStatus(element);
+      function receiverCallback(data) {
+        alert("banner event");
+      }
+      receiver.registerBannerReceiver(receiverCallback);
+      element.on("$destroy", function() {
+        receiver.deregisterBannerReceiver(receiverCallback);
       });
     }
   };
+}]).controller("bannerController", ["$scope", function($scope) {
+  $scope.bannerStyle = {};
 }]);
 
 
-//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/banners.js
-},{"angular":3}],10:[function(require,module,exports){
+//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/banner.js
+},{"./receiver":11,"angular":3}],9:[function(require,module,exports){
 "use strict";
 "use strict";
-require("./submiter");
-require("./actors");
-require("./banners");
-require("angular").module("home", ["submiter", "actors", "banners"]).directive("appHome", function() {
+require("./banner");
+require("./quotes");
+require("angular").module("home", ["banner", "quotes"]).directive("appHome", function() {
   return {
     restrict: "E",
-    templateUrl: "home.html"
+    templateUrl: "home.html",
+    controller: "homeController"
   };
-}).directive("alwaysFocused", ["submiter", "actors", "customBanner", function(submiter, actors, customBanner) {
-  return {
-    restrict: "A",
-    link: function(scope, element) {
-      element[0].focus();
-      element.on("blur", function() {
-        element[0].focus();
-      });
-      element.on("keypress", function(e) {
-        if (e.keyCode === 13) {
-          e.preventDefault();
-          if (customBanner.inputActive) {
-            scope.$apply(function() {
-              submiter.submitCustomBannerUrl(element[0]);
-            });
-          } else {
-            scope.$apply(function() {
-              submiter.submitText(element[0]);
-            });
-          }
-        } else if (e.keyCode >= 48 && e.keyCode <= 57) {
-          e.preventDefault();
-          scope.$apply(function() {
-            if (e.keyCode === 48) {
-              actors.setCurrentActorByIndex(10);
-            } else {
-              actors.setCurrentActorByIndex(e.keyCode - 49);
-            }
-          });
-        }
-      });
-      customBanner.registerInputElement(element);
-    }
-  };
-}]);
+}).controller("homeController", ["$scope", function($scope) {}]);
 
 
 //# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/home.js
-},{"./actors":7,"./banners":9,"./submiter":11,"angular":3}],11:[function(require,module,exports){
+},{"./banner":8,"./quotes":10,"angular":3}],10:[function(require,module,exports){
 "use strict";
 "use strict";
-require("./actors");
-require("angular").module("submiter", ["actors"]).factory("submiter", ["actors", "customBanner", function(actors, customBanner) {
+require("./receiver");
+require("angular").module("quotes", ["receiver"]).directive("appQuotes", ["receiver", function(receiver) {
   return {
-    submitText: function(element) {
-      if (!element.textContent) {
-        element.textContent = "";
-        return false;
+    restrict: "E",
+    templateUrl: "quotes.html",
+    controller: "quotesController",
+    link: function(scope, element) {
+      function receiverCallback(data) {
+        alert("quote event");
       }
-      if (actors.currentActor) {
-        alert(actors.currentActor.name + ": " + element.textContent);
-      } else {
-        alert(element.textContent);
-      }
-      element.textContent = "";
-      actors.currentActor = null;
-    },
-    submitCustomBannerUrl: function(element) {
-      customBanner.toggleInputActivationStatus();
-      alert("image submited: " + element.textContent);
-      element.textContent = "";
+      receiver.registerQuoteReceiver(receiverCallback);
+      element.on("$destroy", function() {
+        receiver.deregisterQuoteReceiver(receiverCallback);
+      });
     }
   };
-}]);
+}]).controller("quotesController", ["$scope", function($scope) {}]);
 
 
-//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/submiter.js
-},{"./actors":7,"angular":3}],12:[function(require,module,exports){
+//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/quotes.js
+},{"./receiver":11,"angular":3}],11:[function(require,module,exports){
+"use strict";
+"use strict";
+require("angular").module("receiver", []).factory("receiver", function() {
+  var socket = io();
+  return {
+    registerBannerReceiver: function(callback) {
+      socket.on("banner-projector", callback);
+    },
+    deregisterBannerReceiver: function(callback) {
+      socket.removeListener("banner-projector", callback);
+    },
+    registerQuoteReceiver: function(callback) {
+      socket.on("quote-projector", callback);
+    },
+    deregisterQuoteReceiver: function(callback) {
+      socket.removeListener("quote-projector", callback);
+    }
+  };
+});
+
+
+//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/receiver.js
+},{"angular":3}],12:[function(require,module,exports){
 "use strict";
 var angular = require("angular");
 angular.module("templateCache", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("actors.html", "<div class=\"actors-block\">\r\n    <div class=\"actor-image-wrapper\" ng-repeat=\"actor in actors track by $index\">\r\n        {{($index+1)}}\r\n        <img actor-image ng-src=\"{{actor.image}}\" ng-class=\"{\'actor-image-not-selected\':!isActorSelected(actor)}\" />\r\n    </div>\r\n</div>\r\n");
-  $templateCache.put("banners.html", "<button ng-repeat=\"bannerButton in bannerButtons track by $index\" class=\"banner-button\">{{bannerButton.title}}</button>\r\n<button custom-banner-button class=\"banner-button\">Custom</button>\r\n");
-  $templateCache.put("home.html", "<app-banners></app-banners>\r\n<app-actors></app-actors>\r\n<div class=\"type-transcribe\" placeholder=\"\" always-focused contentEditable=\"true\"></div>\r\n");
+  $templateCache.put("banner.html", "<div class=\"banner\" ng-style=\"bannerStyle\"></div>\r\n");
+  $templateCache.put("home.html", "<app-banner></app-banner>\r\n<app-quotes></app-quotes>\r\n");
+  $templateCache.put("quotes.html", "quotes\r\n");
 }]);
 
 

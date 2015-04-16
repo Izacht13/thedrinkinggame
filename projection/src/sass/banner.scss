@@ -1,0 +1,11 @@
+@import 'font';
+@import 'grab-bag';
+
+.banner{
+  @extend global-font;
+  @extend unselectable;
+  position:absolute;
+  width:100%;
+  height:50%;
+  background:blue;
+}
