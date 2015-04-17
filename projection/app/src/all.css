@@ -12,25 +12,24 @@ unselectable, .banner {
 
 .banner {
   position: absolute;
-  top: 10px;
   width: 100%;
-  height: 50%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  transition: background-image 1s;
-  -webkit-transition: background-image 1s; }
+  transition: background-image 1s, height 2s;
+  -webkit-transition: background-image 1s, height 2s; }
 
 body {
   padding: 0px;
   margin: 0px;
   text-align: center;
-  background: black; }
+  background: black;
+  overflow: hidden; }
 
-global-font, .quote-box {
+global-font, #quote-container {
   font-family: "Open Sans"; }
 
-unselectable, .quote-box {
+unselectable, #quote-container {
   -moz-user-select: none;
   /* These user-select properties are inheritable, used to prevent text selection */
   -webkit-user-select: none;
@@ -39,12 +38,18 @@ unselectable, .quote-box {
   -webkit-user-drag: none;
   user-drag: none; }
 
-.quote-box {
+#quote-container {
   position: absolute;
-  bottom: 0px;
   width: 100%;
   height: 380px;
   color: white;
   font-size: 90px;
-  transition: height 2s;
-  -webkit-transition: height 2s; }
+  transform: translate(0px, 0%);
+  -webkit-transform: translation(0%, 20%);
+  transition: transform 2s;
+  -webkit-transition: -webkit-transform 2s;
+  text-align: left; }
+
+.quote-container-with-banner {
+  transform: translate(0px, 120%) !important;
+  -webkit-transform: translation(0%, 120%) !important; }

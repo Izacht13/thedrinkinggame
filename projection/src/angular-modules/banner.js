@@ -1,8 +1,9 @@
 "use strict";
 
+var angular=require("angular");
 require("./receiver");
 
-require("angular").module("banner", ["receiver"])
+angular.module("banner", ["receiver"])
 .directive("appBanner", ["receiver", function(receiver){
   return {
     restrict:"E",
@@ -13,6 +14,14 @@ require("angular").module("banner", ["receiver"])
       function receiverCallback(data){
         scope.$apply(function(){
           scope.bannerStyle["background-image"]="url("+data.image+")";
+          if (data.image==="img/banners/unknown.jpg"){
+            scope.bannerStyle.height="0%";
+            angular.element(document.getElementById("quote-container")).removeClass("quote-container-with-banner");
+          }
+          else{
+            scope.bannerStyle.height="50%";
+            angular.element(document.getElementById("quote-container")).addClass("quote-container-with-banner");
+          }
         });
       }
 
@@ -26,5 +35,5 @@ require("angular").module("banner", ["receiver"])
   };
 }])
 .controller("bannerController", ["$scope", function($scope){
-  $scope.bannerStyle={"background-image": "url(img/banners/unknown.jpg)"};
+  $scope.bannerStyle={"background-image": "url(img/banners/unknown.jpg)", height:"0%"};
 }]);

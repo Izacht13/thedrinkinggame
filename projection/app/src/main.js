@@ -10167,8 +10167,9 @@ require("angular").module("app", ["home", "templateCache"]);
 },{"./home":9,"./templateCache":12,"angular":3}],8:[function(require,module,exports){
 "use strict";
 "use strict";
+var angular = require("angular");
 require("./receiver");
-require("angular").module("banner", ["receiver"]).directive("appBanner", ["receiver", function(receiver) {
+angular.module("banner", ["receiver"]).directive("appBanner", ["receiver", function(receiver) {
   return {
     restrict: "E",
     templateUrl: "banner.html",
@@ -10177,6 +10178,13 @@ require("angular").module("banner", ["receiver"]).directive("appBanner", ["recei
       function receiverCallback(data) {
         scope.$apply(function() {
           scope.bannerStyle["background-image"] = "url(" + data.image + ")";
+          if (data.image === "img/banners/unknown.jpg") {
+            scope.bannerStyle.height = "0%";
+            angular.element(document.getElementById("quote-container")).removeClass("quote-container-with-banner");
+          } else {
+            scope.bannerStyle.height = "50%";
+            angular.element(document.getElementById("quote-container")).addClass("quote-container-with-banner");
+          }
         });
       }
       receiver.registerBannerReceiver(receiverCallback);
@@ -10186,7 +10194,10 @@ require("angular").module("banner", ["receiver"]).directive("appBanner", ["recei
     }
   };
 }]).controller("bannerController", ["$scope", function($scope) {
-  $scope.bannerStyle = {"background-image": "url(img/banners/unknown.jpg)"};
+  $scope.bannerStyle = {
+    "background-image": "url(img/banners/unknown.jpg)",
+    height: "0%"
+  };
 }]);
 
 
@@ -10209,23 +10220,48 @@ require("angular").module("home", ["banner", "quotes"]).directive("appHome", fun
 },{"./banner":8,"./quotes":10,"angular":3}],10:[function(require,module,exports){
 "use strict";
 "use strict";
+var angular = require("angular");
 require("./receiver");
-require("angular").module("quotes", ["receiver"]).directive("appQuotes", ["receiver", function(receiver) {
+angular.module("quotes", ["receiver"]).directive("appQuotes", ["receiver", function(receiver) {
   return {
     restrict: "E",
     templateUrl: "quotes.html",
     controller: "quotesController",
     link: function(scope, element) {
+      var quoteLifetime = 5000,
+          lastTime = performance.now(),
+          currentTime = lastTime,
+          deltaTime = 0;
       function receiverCallback(data) {
-        alert("quote event");
+        currentTime = performance.now();
+        deltaTime = currentTime - lastTime;
+        scope.$apply(function() {
+          scope.quotes.push(data);
+        });
+        Array.prototype.forEach.call(element.children().children(), processExpiry);
+        lastTime = currentTime;
+      }
+      function processExpiry(item, index, array) {
+        debugger;
+        if (!item.expiry) {
+          item.expiry = quoteLifetime;
+        } else {
+          item.expiry -= deltaTime;
+          if (item.expiry <= 0) {
+            angular.element(array[index]).remove();
+          }
+        }
       }
       receiver.registerQuoteReceiver(receiverCallback);
       element.on("$destroy", function() {
         receiver.deregisterQuoteReceiver(receiverCallback);
+        observer.disconnect();
       });
     }
   };
-}]).controller("quotesController", ["$scope", function($scope) {}]);
+}]).controller("quotesController", ["$scope", function($scope) {
+  $scope.quotes = [];
+}]);
 
 
 //# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/quotes.js
@@ -10258,7 +10294,7 @@ var angular = require("angular");
 angular.module("templateCache", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("banner.html", "<div class=\"banner\"ng-style=\"bannerStyle\"></div>\r\n");
   $templateCache.put("home.html", "<app-banner></app-banner>\r\n<app-quotes></app-quotes>\r\n");
-  $templateCache.put("quotes.html", "<div class=\"quote-box\">\r\nI am a quote\r\n</div>\r\n");
+  $templateCache.put("quotes.html", "<div id=\"quote-container\">\r\n    <div ng-repeat=\"quote in quotes\">\r\n        {{quote.quote}}\r\n    </div>\r\n</div>\r\n");
 }]);
 
 

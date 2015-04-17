@@ -1,15 +1,22 @@
 @import 'font';
 @import 'grab-bag';
 
-.quote-box{
+#quote-container{
   @extend global-font;
   @extend unselectable;
   position:absolute;
-  bottom:0px;
   width:100%;
   height:380px;
   color:white;
   font-size:90px;
-  transition: height 2s;
-  -webkit-transition: height 2s;
+  transform: translate(0px, 0%);
+  -webkit-transform: translation(0%, 20%);
+  transition: transform 2s;
+  -webkit-transition: -webkit-transform 2s;
+  text-align:left;
+}
+
+.quote-container-with-banner{
+  transform: translate(0px, 120%) !important;
+  -webkit-transform: translation(0%, 120%) !important;
 }
