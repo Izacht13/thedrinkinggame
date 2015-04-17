@@ -10164,12 +10164,13 @@ require("angular").module("app", ["home", "templateCache"]);
 
 
 //# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/app.js
-},{"./home":9,"./templateCache":12,"angular":3}],8:[function(require,module,exports){
+},{"./home":9,"./templateCache":13,"angular":3}],8:[function(require,module,exports){
 "use strict";
 "use strict";
 var angular = require("angular");
 require("./receiver");
-angular.module("banner", ["receiver"]).directive("appBanner", ["receiver", function(receiver) {
+require("./middleman");
+angular.module("banner", ["receiver", "middleman"]).directive("appBanner", ["receiver", "middleman", function(receiver, middleman) {
   return {
     restrict: "E",
     templateUrl: "banner.html",
@@ -10180,10 +10181,14 @@ angular.module("banner", ["receiver"]).directive("appBanner", ["receiver", funct
           scope.bannerStyle["background-image"] = "url(" + data.image + ")";
           if (data.image === "img/banners/unknown.jpg") {
             scope.bannerStyle.height = "0%";
-            angular.element(document.getElementById("quote-container")).removeClass("quote-container-with-banner");
+            var element = angular.element(document.getElementById("quote-container"));
+            element.removeClass("quote-container-with-banner");
+            middleman.preventQuoteOverflow();
           } else {
             scope.bannerStyle.height = "50%";
-            angular.element(document.getElementById("quote-container")).addClass("quote-container-with-banner");
+            var element = angular.element(document.getElementById("quote-container"));
+            element.addClass("quote-container-with-banner");
+            middleman.preventQuoteOverflow();
           }
         });
       }
@@ -10202,7 +10207,7 @@ angular.module("banner", ["receiver"]).directive("appBanner", ["receiver", funct
 
 
 //# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/banner.js
-},{"./receiver":11,"angular":3}],9:[function(require,module,exports){
+},{"./middleman":10,"./receiver":12,"angular":3}],9:[function(require,module,exports){
 "use strict";
 "use strict";
 require("./banner");
@@ -10217,12 +10222,22 @@ require("angular").module("home", ["banner", "quotes"]).directive("appHome", fun
 
 
 //# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/home.js
-},{"./banner":8,"./quotes":10,"angular":3}],10:[function(require,module,exports){
+},{"./banner":8,"./quotes":11,"angular":3}],10:[function(require,module,exports){
+"use strict";
+"use strict";
+require("angular").module("middleman", []).factory("middleman", function() {
+  return {};
+});
+
+
+//# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/middleman.js
+},{"angular":3}],11:[function(require,module,exports){
 "use strict";
 "use strict";
 var angular = require("angular");
 require("./receiver");
-angular.module("quotes", ["receiver"]).directive("appQuotes", ["receiver", function(receiver) {
+require("./middleman");
+angular.module("quotes", ["receiver", "middleman"]).directive("appQuotes", ["receiver", "middleman", function(receiver, middleman) {
   return {
     restrict: "E",
     templateUrl: "quotes.html",
@@ -10241,6 +10256,7 @@ angular.module("quotes", ["receiver"]).directive("appQuotes", ["receiver", funct
         var quoteElements = element.children().children();
         Array.prototype.forEach.call(quoteElements, processExpiry);
         lastTime = currentTime;
+        quoteElements = element.children().children();
         preventOverflow(quoteElements);
       }
       function processExpiry(item, index, array) {
@@ -10255,19 +10271,26 @@ angular.module("quotes", ["receiver"]).directive("appQuotes", ["receiver", funct
       }
       function preventOverflow(quoteElements) {
         var quoteMaxHeight = getElementHeight(element.children()[0]),
-            singleElementHeight = getElementHeight(quoteElements[0]),
+            singleElementHeight = getElementHeight(quoteElements[0] || 1) || Infinity,
             currentHeight = singleElementHeight * quoteElements.length,
             numberOfElementsThatNeedToBeRemoved = Math.ceil((currentHeight - quoteMaxHeight) / singleElementHeight);
+        if (isNaN(numberOfElementsThatNeedToBeRemoved)) {
+          numberOfElementsThatNeedToBeRemoved = Infinity;
+        }
         if (numberOfElementsThatNeedToBeRemoved > 0) {
           smoothRemove(angular.element(Array.prototype.slice.call(quoteElements, 0, numberOfElementsThatNeedToBeRemoved)));
         }
       }
+      middleman.preventQuoteOverflow = function preventQuoteOverflow() {
+        preventOverflow(element.children().children());
+      };
       function getElementHeight(rawElement) {
         return rawElement.offsetHeight;
       }
       function smoothRemove(elements) {
-        debugger;
-        elements.remove();
+        scope.$apply(function() {
+          elements.remove();
+        });
       }
       receiver.registerQuoteReceiver(receiverCallback);
       element.on("$destroy", function() {
@@ -10282,7 +10305,7 @@ angular.module("quotes", ["receiver"]).directive("appQuotes", ["receiver", funct
 
 
 //# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/quotes.js
-},{"./receiver":11,"angular":3}],11:[function(require,module,exports){
+},{"./middleman":10,"./receiver":12,"angular":3}],12:[function(require,module,exports){
 "use strict";
 "use strict";
 require("angular").module("receiver", []).factory("receiver", function() {
@@ -10305,13 +10328,13 @@ require("angular").module("receiver", []).factory("receiver", function() {
 
 
 //# sourceURL=D:/thedrinkinggame/projection/src/angular-modules/receiver.js
-},{"angular":3}],12:[function(require,module,exports){
+},{"angular":3}],13:[function(require,module,exports){
 "use strict";
 var angular = require("angular");
 angular.module("templateCache", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("banner.html", "<div class=\"banner\"ng-style=\"bannerStyle\"></div>\r\n");
   $templateCache.put("home.html", "<app-banner></app-banner>\r\n<app-quotes></app-quotes>\r\n");
-  $templateCache.put("quotes.html", "<div id=\"quote-container\">\r\n    <div ng-repeat=\"quote in quotes\">\r\n        {{quote.quote}}\r\n    </div>\r\n</div>\r\n");
+  $templateCache.put("quotes.html", "<div id=\"quote-container\">\r\n    <div ng-repeat=\"quote in quotes\">\r\n        <img ng-show=\"quotes[$index].actor\" ng-src=\"{{quote.actor.image}}\" />{{quote.quote}}\r\n    </div>\r\n</div>\r\n");
 }]);
 
 

@@ -1,5 +1,5 @@
 <div id="quote-container">
     <div ng-repeat="quote in quotes">
-        {{quote.quote}}
+        <img ng-show="quotes[$index].actor" ng-src="{{quote.actor.image}}" />{{quote.quote}}
     </div>
 </div>

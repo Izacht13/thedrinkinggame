@@ -15,11 +15,11 @@ require("angular").module("submiter", ["actors"])
         return false;
       }
 
-      if (actors.currentActor && actors.currentActor!==actors.noOne){
+      if (actors.currentActor){
         socket.emit('quote', {actor:actors.currentActor, quote:element.textContent});
       }
       else{
-        socket.emit('quote', {quote:element.textContent});
+        socket.emit('quote', {actor:actors[actors.actors.length], quote:element.textContent});
       }
       element.textContent="";
       actors.pickNoOne();

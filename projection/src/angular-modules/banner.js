@@ -2,9 +2,10 @@
 
 var angular=require("angular");
 require("./receiver");
+require("./middleman");
 
-angular.module("banner", ["receiver"])
-.directive("appBanner", ["receiver", function(receiver){
+angular.module("banner", ["receiver", "middleman"])
+.directive("appBanner", ["receiver", "middleman", function(receiver, middleman){
   return {
     restrict:"E",
     templateUrl:"banner.html",
@@ -16,11 +17,15 @@ angular.module("banner", ["receiver"])
           scope.bannerStyle["background-image"]="url("+data.image+")";
           if (data.image==="img/banners/unknown.jpg"){
             scope.bannerStyle.height="0%";
-            angular.element(document.getElementById("quote-container")).removeClass("quote-container-with-banner");
+            var element=angular.element(document.getElementById("quote-container"))
+            element.removeClass("quote-container-with-banner");
+            middleman.preventQuoteOverflow();
           }
           else{
             scope.bannerStyle.height="50%";
-            angular.element(document.getElementById("quote-container")).addClass("quote-container-with-banner");
+            var element=angular.element(document.getElementById("quote-container"))
+            element.addClass("quote-container-with-banner");
+            middleman.preventQuoteOverflow();
           }
         });
       }

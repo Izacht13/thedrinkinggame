@@ -26,9 +26,13 @@ io.on('connection', function(socket){
     socket.broadcast.emit('banner-projector', validData);
   });
   socket.on("quote", function(data){
-    console.log(data);
 
-    if (!data.actor){data.actor={};}
+    if (!data.actor){
+      data.actor={
+        name:"No one",
+        image:"img/noone.png"
+      };
+    }
 
     var validData={
       actor:{

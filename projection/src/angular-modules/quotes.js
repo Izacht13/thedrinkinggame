@@ -2,9 +2,10 @@
 
 var angular=require("angular");
 require("./receiver");
+require("./middleman");
 
-angular.module("quotes", ["receiver"])
-.directive("appQuotes", ["receiver", function(receiver){
+angular.module("quotes", ["receiver", "middleman"])
+.directive("appQuotes", ["receiver", "middleman", function(receiver, middleman){
   return {
     restrict:"E",
     templateUrl:"quotes.html",
@@ -25,6 +26,7 @@ angular.module("quotes", ["receiver"])
         var quoteElements=element.children().children();
         Array.prototype.forEach.call(quoteElements, processExpiry);
         lastTime=currentTime;
+        quoteElements=element.children().children();//REFRESH ELEMENTS INCASE SOME WERE DELETED
         preventOverflow(quoteElements);
       }
 
@@ -42,22 +44,31 @@ angular.module("quotes", ["receiver"])
 
       function preventOverflow(quoteElements){
         var quoteMaxHeight=getElementHeight(element.children()[0]),
-            singleElementHeight=getElementHeight(quoteElements[0]),
+            singleElementHeight=getElementHeight(quoteElements[0] || 1) || Infinity,//CANNOT BE 0 OR ELSE DIVISION BY 0
             currentHeight=singleElementHeight*quoteElements.length,
             numberOfElementsThatNeedToBeRemoved=Math.ceil((currentHeight-quoteMaxHeight)/singleElementHeight);
+
+            if (isNaN(numberOfElementsThatNeedToBeRemoved)){
+              numberOfElementsThatNeedToBeRemoved=Infinity;
+            }
 
             if (numberOfElementsThatNeedToBeRemoved>0){
               smoothRemove(angular.element(Array.prototype.slice.call(quoteElements, 0, numberOfElementsThatNeedToBeRemoved)));
             }
       }
 
+      middleman.preventQuoteOverflow=function preventQuoteOverflow(){
+        preventOverflow(element.children().children());
+      };
+
       function getElementHeight(rawElement){
         return rawElement.offsetHeight;
       }
 
       function smoothRemove(elements){
-        debugger;
-        elements.remove();
+        scope.$apply(function(){
+          elements.remove();
+        });
       }
 
       receiver.registerQuoteReceiver(receiverCallback);
