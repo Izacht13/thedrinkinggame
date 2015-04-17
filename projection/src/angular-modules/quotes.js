@@ -1,10 +1,11 @@
 "use strict";
 
 var angular=require("angular");
+require("./ng-animate.min.js");
 require("./receiver");
 require("./middleman");
 
-angular.module("quotes", ["receiver", "middleman"])
+angular.module("quotes", ["receiver", "middleman", "ngAnimate"])
 .directive("appQuotes", ["receiver", "middleman", function(receiver, middleman){
   return {
     restrict:"E",
@@ -12,7 +13,7 @@ angular.module("quotes", ["receiver", "middleman"])
     controller:"quotesController",
     link:function(scope, element){
 
-      var quoteLifetime=30000,
+      var quoteLifetime=60000,
           lastTime=performance.now(),
           currentTime=lastTime,
           deltaTime=0;
@@ -24,7 +25,7 @@ angular.module("quotes", ["receiver", "middleman"])
           scope.quotes.push(data);
         });
         var quoteElements=element.children().children();
-        Array.prototype.forEach.call(quoteElements, processExpiry);
+        scope.quotes.forEach(processExpiry);
         lastTime=currentTime;
         quoteElements=element.children().children();//REFRESH ELEMENTS INCASE SOME WERE DELETED
         preventOverflow(quoteElements);
@@ -37,7 +38,7 @@ angular.module("quotes", ["receiver", "middleman"])
         else{
           item.expiry-=deltaTime;
           if (item.expiry<=0){
-            smoothRemove(angular.element(array[index]));
+            smoothRemoveItem(index);
           }
         }
       }
@@ -47,13 +48,13 @@ angular.module("quotes", ["receiver", "middleman"])
             singleElementHeight=getElementHeight(quoteElements[0] || 1) || Infinity,//CANNOT BE 0 OR ELSE DIVISION BY 0
             currentHeight=singleElementHeight*quoteElements.length,
             numberOfElementsThatNeedToBeRemoved=Math.ceil((currentHeight-quoteMaxHeight)/singleElementHeight);
-
+            debugger;
             if (isNaN(numberOfElementsThatNeedToBeRemoved)){
               numberOfElementsThatNeedToBeRemoved=Infinity;
             }
 
             if (numberOfElementsThatNeedToBeRemoved>0){
-              smoothRemove(angular.element(Array.prototype.slice.call(quoteElements, 0, numberOfElementsThatNeedToBeRemoved)));
+              smoothRemoveItems(numberOfElementsThatNeedToBeRemoved);
             }
       }
 
@@ -65,9 +66,15 @@ angular.module("quotes", ["receiver", "middleman"])
         return rawElement.offsetHeight;
       }
 
-      function smoothRemove(elements){
+      function smoothRemoveItem(index){
         scope.$apply(function(){
-          elements.remove();
+          scope.quotes.splice(index, 1);
+        });
+      }
+
+      function smoothRemoveItems(amount){
+        scope.$apply(function(){
+          scope.quotes.splice(0, amount);
         });
       }
 

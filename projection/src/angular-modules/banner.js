@@ -19,15 +19,14 @@ angular.module("banner", ["receiver", "middleman"])
             scope.bannerStyle.height="0%";
             var element=angular.element(document.getElementById("quote-container"))
             element.removeClass("quote-container-with-banner");
-            middleman.preventQuoteOverflow();
           }
           else{
             scope.bannerStyle.height="50%";
             var element=angular.element(document.getElementById("quote-container"))
             element.addClass("quote-container-with-banner");
-            middleman.preventQuoteOverflow();
           }
         });
+        middleman.preventQuoteOverflow();
       }
 
       receiver.registerBannerReceiver(receiverCallback);

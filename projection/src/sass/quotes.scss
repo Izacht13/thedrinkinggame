@@ -6,25 +6,24 @@
   @extend unselectable;
   position:absolute;
   width:100%;
-  height:380px;
+  height:100%;
   color:white;
   font-size:90px;
   transform: translate(0px, 0%);
-  -webkit-transform: translate(0%, 20%);
+  -webkit-transform: translate(0%, 0%);
   transition: transform 2s;
   -webkit-transition: -webkit-transform 2s;
   text-align:left;
-  background:blue;
   padding:20px;
 }
 
 .quote-container-with-banner{
   transform: translate(0px, 120%) !important;
   -webkit-transform: translation(0%, 120%) !important;
+  height:380px !important;
 }
 
 #quote-container div{
-  background:red;
   word-break:break-all;
   padding-left:180px;
   height:150px;
