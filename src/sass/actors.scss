@@ -12,12 +12,16 @@ $image-size:150px;
 .actor-image-wrapper{
   @extend unselectable;
   @extend global-font;
-  width:$image-size;
-  height:$image-size;
+  max-width:$image-size;
+  max-height:$image-size;
+  width:10%;
+  height:10%;
   display:inline-block;
 }
 .actor-image-wrapper img{
   @extend unselectable;
+  max-width:$image-size;
+  max-height:$image-size;
   width:100%;
   height:100%;
   cursor:pointer;

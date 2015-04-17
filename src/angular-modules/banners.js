@@ -58,6 +58,10 @@ require("angular").module("banners", ["submiter"])
     {
       title:"Boomerang",
       image:"img/banners/boomerang.png"
+    },
+    {
+      title:"Off",
+      image:"img/banners/unknown.png"
     }
   ];
 

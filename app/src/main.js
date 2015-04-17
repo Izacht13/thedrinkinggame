@@ -10292,6 +10292,9 @@ require("angular").module("banners", ["submiter"]).directive("appBanners", funct
   }, {
     title: "Boomerang",
     image: "img/banners/boomerang.png"
+  }, {
+    title: "Off",
+    image: "img/banners/unknown.png"
   }];
 }]).factory("customBanner", function() {
   var inputElement = null,
