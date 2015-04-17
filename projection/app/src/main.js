@@ -10228,7 +10228,7 @@ angular.module("quotes", ["receiver"]).directive("appQuotes", ["receiver", funct
     templateUrl: "quotes.html",
     controller: "quotesController",
     link: function(scope, element) {
-      var quoteLifetime = 5000,
+      var quoteLifetime = 30000,
           lastTime = performance.now(),
           currentTime = lastTime,
           deltaTime = 0;
@@ -10238,19 +10238,36 @@ angular.module("quotes", ["receiver"]).directive("appQuotes", ["receiver", funct
         scope.$apply(function() {
           scope.quotes.push(data);
         });
-        Array.prototype.forEach.call(element.children().children(), processExpiry);
+        var quoteElements = element.children().children();
+        Array.prototype.forEach.call(quoteElements, processExpiry);
         lastTime = currentTime;
+        preventOverflow(quoteElements);
       }
       function processExpiry(item, index, array) {
-        debugger;
         if (!item.expiry) {
           item.expiry = quoteLifetime;
         } else {
           item.expiry -= deltaTime;
           if (item.expiry <= 0) {
-            angular.element(array[index]).remove();
+            smoothRemove(angular.element(array[index]));
           }
         }
+      }
+      function preventOverflow(quoteElements) {
+        var quoteMaxHeight = getElementHeight(element.children()[0]),
+            singleElementHeight = getElementHeight(quoteElements[0]),
+            currentHeight = singleElementHeight * quoteElements.length,
+            numberOfElementsThatNeedToBeRemoved = Math.ceil((currentHeight - quoteMaxHeight) / singleElementHeight);
+        if (numberOfElementsThatNeedToBeRemoved > 0) {
+          smoothRemove(angular.element(Array.prototype.slice.call(quoteElements, 0, numberOfElementsThatNeedToBeRemoved)));
+        }
+      }
+      function getElementHeight(rawElement) {
+        return rawElement.offsetHeight;
+      }
+      function smoothRemove(elements) {
+        debugger;
+        elements.remove();
       }
       receiver.registerQuoteReceiver(receiverCallback);
       element.on("$destroy", function() {
