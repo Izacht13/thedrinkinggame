@@ -10261,40 +10261,40 @@ require("angular").module("banners", ["submiter"]).directive("appBanners", funct
 }).controller("bannersController", ["$scope", function($scope) {
   $scope.bannerButtons = [{
     title: "The Drinking Game",
-    image: "img/banners/thedrinkinggame.png"
+    image: "img/banners/thedrinkinggame.jpg"
   }, {
     title: "Hemingway",
-    image: "img/banners/hemingway.png"
+    image: "img/banners/hemingway.jpg"
   }, {
     title: "Watergate",
-    image: "img/banners/watergate.png"
+    image: "img/banners/watergate.jpg"
   }, {
     title: "Speed Round",
-    image: "img/banners/speedround.png"
+    image: "img/banners/speedround.jpg"
   }, {
     title: "Disco Round",
-    image: "img/banners/discoround.png"
+    image: "img/banners/discoround.jpg"
   }, {
     title: "Interrogation",
-    image: "img/banners/interrogation.png"
+    image: "img/banners/interrogation.jpg"
   }, {
     title: "Jay Whitehead",
-    image: "img/banners/jaywhitehead.png"
+    image: "img/banners/jaywhitehead.jpg"
   }, {
     title: "Bell of Silence",
-    image: "img/banners/bellofsilence.png"
+    image: "img/banners/bellofsilence.jpg"
   }, {
     title: "Sociable!",
-    image: "img/banners/sociable.png"
+    image: "img/banners/sociable.jpg"
   }, {
     title: "Here's lookin' at you, kid",
-    image: "img/banners/hereslookinatyoukid.png"
+    image: "img/banners/hereslookinatyoukid.jpg"
   }, {
     title: "Boomerang",
-    image: "img/banners/boomerang.png"
+    image: "img/banners/boomerang.jpg"
   }, {
     title: "Off",
-    image: "img/banners/unknown.png"
+    image: "img/banners/unknown.jpg"
   }];
 }]).factory("customBanner", function() {
   var inputElement = null,

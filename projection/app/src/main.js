@@ -10186,7 +10186,7 @@ require("angular").module("banner", ["receiver"]).directive("appBanner", ["recei
     }
   };
 }]).controller("bannerController", ["$scope", function($scope) {
-  $scope.bannerStyle = {"background-image": "url(img/banners/unknown.png)"};
+  $scope.bannerStyle = {"background-image": "url(img/banners/unknown.jpg)"};
 }]);
 
 
@@ -10258,7 +10258,7 @@ var angular = require("angular");
 angular.module("templateCache", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("banner.html", "<div class=\"banner\"ng-style=\"bannerStyle\"></div>\r\n");
   $templateCache.put("home.html", "<app-banner></app-banner>\r\n<app-quotes></app-quotes>\r\n");
-  $templateCache.put("quotes.html", "quotes\r\n");
+  $templateCache.put("quotes.html", "<div class=\"quote-box\">\r\nI am a quote\r\n</div>\r\n");
 }]);
 
 

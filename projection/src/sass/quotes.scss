@@ -1,0 +1,15 @@
+@import 'font';
+@import 'grab-bag';
+
+.quote-box{
+  @extend global-font;
+  @extend unselectable;
+  position:absolute;
+  bottom:0px;
+  width:100%;
+  height:380px;
+  color:white;
+  font-size:90px;
+  transition: height 2s;
+  -webkit-transition: height 2s;
+}

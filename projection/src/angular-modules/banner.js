@@ -26,5 +26,5 @@ require("angular").module("banner", ["receiver"])
   };
 }])
 .controller("bannerController", ["$scope", function($scope){
-  $scope.bannerStyle={"background-image": "url(img/banners/unknown.png)"};
+  $scope.bannerStyle={"background-image": "url(img/banners/unknown.jpg)"};
 }]);

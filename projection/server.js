@@ -5,9 +5,9 @@ var express=require("express"),
 app.use(express.static(path.join(__dirname, '/app')));
 app.use("/transcribe", express.static(path.join(__dirname, '../app')));
 
-app.get("/img/banners/*.png", function(req, res){
+app.get("/img/banners/*.jpg", function(req, res){
   console.log("banner not found");
-  res.sendFile(path.join(__dirname, '/app/img/banners/unknown.png'));
+  res.sendFile(path.join(__dirname, '/app/img/banners/unknown.jpg'));
 });
 
 var server=app.listen(80),

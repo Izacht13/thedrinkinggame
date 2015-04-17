@@ -12,17 +12,39 @@ unselectable, .banner {
 
 .banner {
   position: absolute;
-  top: 50px;
+  top: 10px;
   width: 100%;
   height: 50%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  transition: background-image 3s;
-  -webkit-transition: background-image 3s; }
+  transition: background-image 1s;
+  -webkit-transition: background-image 1s; }
 
 body {
   padding: 0px;
   margin: 0px;
   text-align: center;
   background: black; }
+
+global-font, .quote-box {
+  font-family: "Open Sans"; }
+
+unselectable, .quote-box {
+  -moz-user-select: none;
+  /* These user-select properties are inheritable, used to prevent text selection */
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none; }
+
+.quote-box {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 380px;
+  color: white;
+  font-size: 90px;
+  transition: height 2s;
+  -webkit-transition: height 2s; }
