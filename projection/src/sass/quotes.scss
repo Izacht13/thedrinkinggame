@@ -11,8 +11,8 @@
   font-size:90px;
   transform: translate(0px, 0%);
   -webkit-transform: translate(0%, 0%);
-  transition: transform 2s;
-  -webkit-transition: -webkit-transform 2s;
+  transition: transform 2s, width 1s;
+  -webkit-transition: -webkit-transform 2s, width 1s;
   text-align:left;
   padding:20px;
 }
@@ -27,6 +27,7 @@
   word-break:break-all;
   padding-left:180px;
   height:150px;
+  overflow:hidden;
 }
 
 #quote-container img{
@@ -35,4 +36,21 @@
   border-radius:100px;
   transform: translate(-180px, 0px);
   -webkit-transform: translate(-180px, 0px);
+}
+
+#quote-container div.ng-enter {
+  -webkit-transition: 1s ease-in-out;
+  transition: 1s ease-in-out;
+  opacity:0;
+  margin-left: 100%;
+}
+
+#quote-container div.ng-enter-active {
+  margin-left: 0;
+  opacity:1;
+}
+
+#quote-container div.ng-leave {
+  -webkit-transition: 0s;
+  transition: 0s ease-in-out;
 }

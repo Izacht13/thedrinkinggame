@@ -1,5 +1,5 @@
 <div id="quote-container">
-    <div ng-repeat="quote in quotes">
+    <div ng-repeat="quote in quotes" ng-style="{'font-size':(quote.quote.length>=30)?'50px':'90px'}">
         <img ng-show="quotes[$index].actor" ng-src="{{quote.actor.image}}" />{{quote.quote}}
     </div>
 </div>
