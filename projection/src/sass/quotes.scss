@@ -31,6 +31,7 @@
 }
 
 #quote-container img{
+  @extend unselectable;
   position:absolute;
   vertical-align:middle;
   border-radius:100px;

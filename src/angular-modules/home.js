@@ -3,15 +3,16 @@
 require("./submiter");
 require("./actors");
 require("./banners");
+require("./hotkeys");
 
-require("angular").module("home", ["submiter", "actors", "banners"])
+require("angular").module("home", ["submiter", "actors", "banners", "hotkeys"])
 .directive("appHome", function() {
   return {
     restrict:"E",
     templateUrl:"home.html"
   };
 })
-.directive("alwaysFocused", ["submiter", "actors", "customBanner", function(submiter, actors, customBanner){
+.directive("alwaysFocused", ["submiter", "actors", "customBanner", "hotkeys",  function(submiter, actors, customBanner, hotkeys){
   return {
     restrict:"A",
     link:function(scope, element){
@@ -34,7 +35,8 @@ require("angular").module("home", ["submiter", "actors", "banners"])
             });
           }
         }
-        else if (e.keyCode>=48 && e.keyCode<=57){
+        debugger;
+        if (e.keyCode>=48 && e.keyCode<=57 && hotkeys.enabled){
           e.preventDefault();
           scope.$apply(function(){
             if (e.keyCode===48){

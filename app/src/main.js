@@ -10229,11 +10229,12 @@ angular.module("actors", []).factory("actors", function() {
       });
     }
   };
-}]).controller("actorController", ["$scope", "actors", function($scope, actors) {
+}]).controller("actorController", ["$scope", "actors", "hotkeys", function($scope, actors, hotkeys) {
   $scope.actors = actors.actors;
   $scope.isActorSelected = function(actor) {
     return actors.currentActor === actor;
   };
+  $scope.hotkeys = hotkeys;
 }]);
 
 
@@ -10247,7 +10248,7 @@ require("angular").module("app", ["home", "templateCache"]);
 
 
 //# sourceURL=D:/thedrinkinggame/src/angular-modules/app.js
-},{"./home":10,"./templateCache":12,"angular":3}],9:[function(require,module,exports){
+},{"./home":10,"./templateCache":13,"angular":3}],9:[function(require,module,exports){
 "use strict";
 "use strict";
 require("./submiter");
@@ -10344,18 +10345,19 @@ require("angular").module("banners", ["submiter"]).directive("appBanners", funct
 
 
 //# sourceURL=D:/thedrinkinggame/src/angular-modules/banners.js
-},{"./submiter":11,"angular":3}],10:[function(require,module,exports){
+},{"./submiter":12,"angular":3}],10:[function(require,module,exports){
 "use strict";
 "use strict";
 require("./submiter");
 require("./actors");
 require("./banners");
-require("angular").module("home", ["submiter", "actors", "banners"]).directive("appHome", function() {
+require("./hotkeys");
+require("angular").module("home", ["submiter", "actors", "banners", "hotkeys"]).directive("appHome", function() {
   return {
     restrict: "E",
     templateUrl: "home.html"
   };
-}).directive("alwaysFocused", ["submiter", "actors", "customBanner", function(submiter, actors, customBanner) {
+}).directive("alwaysFocused", ["submiter", "actors", "customBanner", "hotkeys", function(submiter, actors, customBanner, hotkeys) {
   return {
     restrict: "A",
     link: function(scope, element) {
@@ -10375,7 +10377,9 @@ require("angular").module("home", ["submiter", "actors", "banners"]).directive("
               submiter.submitText(element[0]);
             });
           }
-        } else if (e.keyCode >= 48 && e.keyCode <= 57) {
+        }
+        debugger;
+        if (e.keyCode >= 48 && e.keyCode <= 57 && hotkeys.enabled) {
           e.preventDefault();
           scope.$apply(function() {
             if (e.keyCode === 48) {
@@ -10393,7 +10397,32 @@ require("angular").module("home", ["submiter", "actors", "banners"]).directive("
 
 
 //# sourceURL=D:/thedrinkinggame/src/angular-modules/home.js
-},{"./actors":7,"./banners":9,"./submiter":11,"angular":3}],11:[function(require,module,exports){
+},{"./actors":7,"./banners":9,"./hotkeys":11,"./submiter":12,"angular":3}],11:[function(require,module,exports){
+"use strict";
+"use strict";
+require("angular").module("hotkeys", []).directive("appHotkeyToggleButton", ["hotkeys", function(hotkeys) {
+  return {
+    restrict: "E",
+    controller: "hotKeyToggleButtonController",
+    link: function(scope, element) {
+      element.children().on("click", function() {
+        hotkeys.enabled = !hotkeys.enabled;
+        scope.$apply(function() {
+          scope.text = (hotkeys.enabled) ? "Disable Hotkeys" : "Enable Hotkeys";
+        });
+      });
+    },
+    templateUrl: "hotkeys.html"
+  };
+}]).controller("hotKeyToggleButtonController", ["$scope", function($scope) {
+  $scope.text = "Disable Hotkeys";
+}]).factory("hotkeys", function() {
+  return {enabled: true};
+});
+
+
+//# sourceURL=D:/thedrinkinggame/src/angular-modules/hotkeys.js
+},{"angular":3}],12:[function(require,module,exports){
 "use strict";
 "use strict";
 require("./actors");
@@ -10432,13 +10461,14 @@ require("angular").module("submiter", ["actors"]).factory("submiter", ["actors",
 
 
 //# sourceURL=D:/thedrinkinggame/src/angular-modules/submiter.js
-},{"./actors":7,"angular":3}],12:[function(require,module,exports){
+},{"./actors":7,"angular":3}],13:[function(require,module,exports){
 "use strict";
 var angular = require("angular");
 angular.module("templateCache", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("actors.html", "<div class=\"actors-block\">\r\n    <div class=\"actor-image-wrapper\" ng-repeat=\"actor in actors track by $index\">\r\n        {{($index+1)}}\r\n        <img actor-image ng-src=\"{{actor.image}}\" ng-class=\"{\'actor-image-not-selected\':!isActorSelected(actor)}\" />\r\n    </div>\r\n</div>\r\n");
+  $templateCache.put("actors.html", "<div class=\"actors-block\">\r\n    <div class=\"actor-image-wrapper\" ng-repeat=\"actor in actors track by $index\">\r\n        {{(hotkeys.enabled?$index+1:\"\")}}\r\n        <img actor-image ng-src=\"{{actor.image}}\" ng-class=\"{\'actor-image-not-selected\':!isActorSelected(actor)}\" />\r\n    </div>\r\n</div>\r\n");
   $templateCache.put("banners.html", "<button ng-repeat=\"bannerButton in bannerButtons track by $index\" banner-button class=\"banner-button\">{{bannerButton.title}}</button>\r\n<button custom-banner-button class=\"banner-button custom\">Custom</button>\r\n");
-  $templateCache.put("home.html", "<app-banners></app-banners>\r\n<app-actors></app-actors>\r\n<div class=\"type-transcribe\" placeholder=\"\" always-focused contentEditable=\"true\"></div>\r\n");
+  $templateCache.put("home.html", "<app-banners></app-banners>\r\n<app-actors></app-actors>\r\n<div class=\"type-transcribe\" placeholder=\"\" always-focused contentEditable=\"true\"></div>\r\n<app-hotkey-toggle-button></app-hotkey-toggle-button>\r\n");
+  $templateCache.put("hotkeys.html", "<button class=\"banner-button hotkeys-button\">{{text}}</button>\r\n");
 }]);
 
 

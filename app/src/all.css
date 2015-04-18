@@ -74,6 +74,12 @@ body {
   margin: 0px;
   text-align: center; }
 
+.hotkeys-button {
+  position: absolute;
+  bottom: 50px;
+  left: 30px;
+  width: 132px !important; }
+
 global-font, .type-transcribe {
   font-family: "Open Sans"; }
 

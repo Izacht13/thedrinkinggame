@@ -89,9 +89,11 @@ angular.module("actors", [])
     }
   };
 }])
-.controller("actorController", ["$scope", "actors", function($scope, actors){
+.controller("actorController", ["$scope", "actors", "hotkeys", function($scope, actors, hotkeys){
   $scope.actors=actors.actors;
   $scope.isActorSelected=function(actor){
     return actors.currentActor===actor;
   };
+
+  $scope.hotkeys=hotkeys;
 }]);
