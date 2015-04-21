@@ -3,7 +3,7 @@
 require("./angular-modules/app");
 
 
-//# sourceURL=D:/thedrinkinggame/src/main.js
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/src/main.js
 },{"./angular-modules/app":8}],2:[function(require,module,exports){
 "use strict";
 (function(Q, W, t) {
@@ -7290,14 +7290,14 @@ require("./angular-modules/app");
 !window.angular.$$csp() && window.angular.element(document).find("head").prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
 
 
-//# sourceURL=D:/thedrinkinggame/node_modules/angular/angular.min.js
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/node_modules/angular/angular.min.js
 },{}],3:[function(require,module,exports){
 "use strict";
 require('./angular.min.js');
 module.exports = angular;
 
 
-//# sourceURL=D:/thedrinkinggame/node_modules/angular/index.js
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/node_modules/angular/index.js
 },{"./angular.min.js":2}],4:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
@@ -10238,7 +10238,7 @@ angular.module("actors", []).factory("actors", function() {
 }]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/actors.js
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/src/angular-modules/actors.js
 },{"angular":3}],8:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -10247,8 +10247,8 @@ require("./templateCache");
 require("angular").module("app", ["home", "templateCache"]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/app.js
-},{"./home":10,"./templateCache":13,"angular":3}],9:[function(require,module,exports){
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/src/angular-modules/app.js
+},{"./home":10,"./templateCache":14,"angular":3}],9:[function(require,module,exports){
 "use strict";
 "use strict";
 require("./submiter");
@@ -10344,60 +10344,25 @@ require("angular").module("banners", ["submiter"]).directive("appBanners", funct
 }]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/banners.js
-},{"./submiter":12,"angular":3}],10:[function(require,module,exports){
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/src/angular-modules/banners.js
+},{"./submiter":13,"angular":3}],10:[function(require,module,exports){
 "use strict";
 "use strict";
 require("./submiter");
 require("./actors");
 require("./banners");
 require("./hotkeys");
-require("angular").module("home", ["submiter", "actors", "banners", "hotkeys"]).directive("appHome", function() {
+require("./quote-input");
+require("angular").module("home", ["actors", "banners", "hotkeys", "quoteInput"]).directive("appHome", function() {
   return {
     restrict: "E",
     templateUrl: "home.html"
   };
-}).directive("alwaysFocused", ["submiter", "actors", "customBanner", "hotkeys", function(submiter, actors, customBanner, hotkeys) {
-  return {
-    restrict: "A",
-    link: function(scope, element) {
-      element[0].focus();
-      element.on("blur", function() {
-        element[0].focus();
-      });
-      element.on("keypress", function(e) {
-        if (e.keyCode === 13) {
-          e.preventDefault();
-          if (customBanner.inputActive) {
-            scope.$apply(function() {
-              submiter.submitCustomBannerUrl(element[0]);
-            });
-          } else {
-            scope.$apply(function() {
-              submiter.submitText(element[0]);
-            });
-          }
-        }
-        debugger;
-        if (e.keyCode >= 48 && e.keyCode <= 57 && hotkeys.enabled) {
-          e.preventDefault();
-          scope.$apply(function() {
-            if (e.keyCode === 48) {
-              actors.setCurrentActorByIndex(8);
-            } else {
-              actors.setCurrentActorByIndex(e.keyCode - 49);
-            }
-          });
-        }
-      });
-      customBanner.registerInputElement(element);
-    }
-  };
-}]);
+});
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/home.js
-},{"./actors":7,"./banners":9,"./hotkeys":11,"./submiter":12,"angular":3}],11:[function(require,module,exports){
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/src/angular-modules/home.js
+},{"./actors":7,"./banners":9,"./hotkeys":11,"./quote-input":12,"./submiter":13,"angular":3}],11:[function(require,module,exports){
 "use strict";
 "use strict";
 require("angular").module("hotkeys", []).directive("appHotkeyToggleButton", ["hotkeys", function(hotkeys) {
@@ -10421,8 +10386,56 @@ require("angular").module("hotkeys", []).directive("appHotkeyToggleButton", ["ho
 });
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/hotkeys.js
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/src/angular-modules/hotkeys.js
 },{"angular":3}],12:[function(require,module,exports){
+"use strict";
+"use strict";
+require("./submiter");
+require("./actors");
+require("./banners");
+require("./hotkeys");
+require("angular").module("quoteInput", ["submiter", "actors", "banners", "hotkeys"]).directive("quoteInput", ["submiter", "actors", "customBanner", "hotkeys", function(submiter, actors, customBanner, hotkeys) {
+  return {
+    restrict: "E",
+    templateUrl: "quote-input.html",
+    link: function(scope, element) {
+      element = element.children();
+      element[0].focus();
+      element.on("blur", function() {
+        element[0].focus();
+      });
+      element.on("keypress", function(e) {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+          if (customBanner.inputActive) {
+            scope.$apply(function() {
+              submiter.submitCustomBannerUrl(element[0]);
+            });
+          } else {
+            scope.$apply(function() {
+              submiter.submitText(element[0]);
+            });
+          }
+        }
+        if (e.keyCode >= 48 && e.keyCode <= 57 && hotkeys.enabled) {
+          e.preventDefault();
+          scope.$apply(function() {
+            if (e.keyCode === 48) {
+              actors.setCurrentActorByIndex(8);
+            } else {
+              actors.setCurrentActorByIndex(e.keyCode - 49);
+            }
+          });
+        }
+      });
+      customBanner.registerInputElement(element);
+    }
+  };
+}]);
+
+
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/src/angular-modules/quote-input.js
+},{"./actors":7,"./banners":9,"./hotkeys":11,"./submiter":13,"angular":3}],13:[function(require,module,exports){
 "use strict";
 "use strict";
 require("./actors");
@@ -10460,19 +10473,20 @@ require("angular").module("submiter", ["actors"]).factory("submiter", ["actors",
 }]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/submiter.js
-},{"./actors":7,"angular":3}],13:[function(require,module,exports){
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/src/angular-modules/submiter.js
+},{"./actors":7,"angular":3}],14:[function(require,module,exports){
 "use strict";
 var angular = require("angular");
 angular.module("templateCache", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("actors.html", "<div class=\"actors-block\">\r\n    <div class=\"actor-image-wrapper\" ng-repeat=\"actor in actors track by $index\">\r\n        {{(hotkeys.enabled?$index+1:\"\")}}\r\n        <img actor-image ng-src=\"{{actor.image}}\" ng-class=\"{\'actor-image-not-selected\':!isActorSelected(actor)}\" />\r\n    </div>\r\n</div>\r\n");
   $templateCache.put("banners.html", "<button ng-repeat=\"bannerButton in bannerButtons track by $index\" banner-button class=\"banner-button\">{{bannerButton.title}}</button>\r\n<button custom-banner-button class=\"banner-button custom\">Custom</button>\r\n");
-  $templateCache.put("home.html", "<app-banners></app-banners>\r\n<app-actors></app-actors>\r\n<div class=\"type-transcribe\" placeholder=\"\" always-focused contentEditable=\"true\"></div>\r\n<app-hotkey-toggle-button></app-hotkey-toggle-button>\r\n");
+  $templateCache.put("home.html", "<app-banners></app-banners>\r\n<app-actors></app-actors>\r\n<quote-input></quote-input>\r\n<app-hotkey-toggle-button></app-hotkey-toggle-button>\r\n");
   $templateCache.put("hotkeys.html", "<button class=\"banner-button hotkeys-button\">{{text}}</button>\r\n");
+  $templateCache.put("quote-input.html", "<div class=\"type-transcribe\" placeholder=\"\" contentEditable=\"true\"></div>\r\n");
 }]);
 
 
-//# sourceURL=D:/thedrinkinggame/src/angular-modules/templateCache.js
+//# sourceURL=C:/Users/Spencer/Desktop/thedrinkinggame/src/angular-modules/templateCache.js
 },{"angular":3}]},{},[1,6]);
 
 //# sourceMappingURL=../src/main.js.map
