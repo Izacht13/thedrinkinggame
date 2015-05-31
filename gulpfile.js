@@ -1,69 +1,54 @@
 "use strict";
 
 var gulp = require('gulp'),
-    concat = require('gulp-concat'),
-    sass = require("gulp-sass"),
-    gutil = require('gulp-util'),
-    sourcemaps = require('gulp-sourcemaps'),
-    source = require('vinyl-source-stream'),
-    buffer = require('vinyl-buffer'),
-    watchify = require('watchify'),
-    browserify = require('browserify'),
-    es6ify = require('es6ify'),
-    templateCache = require("gulp-angular-templatecache");
+    argv = require("yargs").argv,
+    path = require("path");
 
-    es6ify.configure(/^(?!.*node_modules)+.+\.js$/);
+var main = require("./package.json").main,
+    createBundler = require("./buildscripts/createBundler");
 
-var main = require("./package.json").main;
-watchify.args.fullPaths=false;
-
-var bundler = browserify("./"+main, watchify.args);
-bundler.add(es6ify.runtime);
-bundler.transform(es6ify)
-bundler.plugin(watchify);
-
-
-
-bundler.on('update', bundle);
-bundler.on('log', gutil.log);
-
-function bundle() {
-
-  return bundler.bundle()
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source(main))
-      .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./app'));
+function getSourcePath(dir){
+    var srcDir=(argv.projection)?"projection/src/":"src/";
+    return path.join(srcDir, dir);
 }
 
+var bundle = require("./buildscripts/bundle"),
+    appPath=(argv.projection)?"projection/app":"app";
 
-gulp.task('scripts', bundle);
-
-gulp.task('sass', function() {
-   return gulp.src("src/sass/**/*.scss")
-        .pipe(sass())
-        .pipe(concat("all.css"))
-        .pipe(gulp.dest('app/src'));
+gulp.task('scripts', ['templateCache'], function(){
+    bundle(createBundler({
+        es6ify:!argv.es6,
+        watchify:argv.watch,
+        appPath:appPath
+    }));
 });
 
-var templateOptions = {
-  module:"templateCache",
-  templateHeader:'var angular=require("angular"); angular.module("<%= module %>"<%= standalone %>, []).run(["$templateCache", function($templateCache) {',
-  templateFooter:'}]);'
-};
+var sass = require("gulp-sass"),
+    concat = require('gulp-concat');
+
+gulp.task('sass', function() {
+   return gulp.src(getSourcePath("sass/**/*.scss"))
+        .pipe(sass())
+        .pipe(concat("all.css"))
+        .pipe(gulp.dest(path.join(appPath, "/src")));
+});
+
+var angularTemplateOptions = require("./buildscripts/angularTemplateOptions.json"),
+    templateCache = require("gulp-angular-templatecache");
 
 gulp.task('templateCache', function(){
-   return gulp.src(["src/templates/**/*.html", "src/templates/**/*.htm"])
-       .pipe(templateCache("templateCache.js", templateOptions))
+   return gulp.src([getSourcePath("templates/**/*.html"), getSourcePath("templates/**/*.htm")])
+       .pipe(templateCache("templateCache.js", angularTemplateOptions))
        .pipe(gulp.dest("src/angular-modules"));
 });
 
 gulp.task('watch', function() {
-  gulp.watch("src/sass/**/*.scss", ['sass']);
-  gulp.watch("src/templates/**/*.html", ['templateCache']);
-  gulp.watch("src/templates/**/*.htm",  ['templateCache']);
+  if (argv.watch){
+      gulp.watch(getSourcePath("sass/**/*.scss"), ['sass']);
+      gulp.watch([getSourcePath("templates/**/*.html"), getSourcePath("templates/**/*.htm")], ['templateCache']);
+  }
 });
 
-gulp.task('default', ['scripts', 'sass', 'templateCache', 'watch']);
+gulp.task('default', ['scripts', 'sass', 'watch']);
+
+gulp.task("transcribe", ["default"]);

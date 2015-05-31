@@ -1,0 +1,5 @@
+{
+  "module":"templateCache",
+  "templateHeader":"var angular=require('angular'); angular.module('<%= module %>'<%= standalone %>, []).run(['$templateCache', function($templateCache) {",
+  "templateFooter":"}]);"
+}
