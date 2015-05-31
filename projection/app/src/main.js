@@ -14884,7 +14884,6 @@ angular.module("quotes", ["receiver", "middleman", "ngAnimate"]).directive("appQ
             singleElementHeight = getElementHeight(quoteElements[0] || 1) || Infinity,
             currentHeight = singleElementHeight * quoteElements.length,
             numberOfElementsThatNeedToBeRemoved = Math.ceil((currentHeight - quoteMaxHeight) / singleElementHeight);
-        debugger;
         if (isNaN(numberOfElementsThatNeedToBeRemoved)) {
           numberOfElementsThatNeedToBeRemoved = Infinity;
         }
