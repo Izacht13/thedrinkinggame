@@ -4,8 +4,7 @@ var gulp = require('gulp'),
     argv = require("yargs").argv,
     path = require("path");
 
-var main = require("./package.json").main,
-    createBundler = require("./buildscripts/createBundler");
+var createBundler = require("./buildscripts/createBundler");
 
 function getSourcePath(dir){
     var srcDir=(argv.projection)?"projection/src/":"src/";

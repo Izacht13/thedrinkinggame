@@ -6,12 +6,10 @@ var gulp = require("gulp"),
     buffer = require("vinyl-buffer"),
     rename = require("gulp-rename");
     
-var main = require("./../package.json").main;
-
 module.exports = function bundle(bundler) {
   return bundler.bundle()
     .on('error', gutil.log.bind(gutil, 'Browserify Error\n'))
-    .pipe(source(main))
+    .pipe(source(bundler.main))
     .pipe(buffer())
     .pipe(rename(function(name) {
       name.dirname = "src/";
