@@ -1,3 +1,5 @@
-var angular=require('angular'); angular.module('templateCache', []).run(['$templateCache', function($templateCache) {$templateCache.put("banner.html","<div class=\"banner\"ng-style=\"bannerStyle\"></div>");
-$templateCache.put("home.html","<app-banner></app-banner>\r\n<app-quotes></app-quotes>\r\n");
-$templateCache.put("quotes.html","<div id=\"quote-container\">\r\n    <div ng-repeat=\"quote in quotes\" ng-style=\"{\'font-size\':(quote.quote.length>=30)?\'50px\':\'90px\'}\">\r\n        <img ng-show=\"quotes[$index].actor\" ng-src=\"{{quote.actor.image}}\" />{{quote.quote}}\r\n    </div>\r\n</div>\r\n");}]);
+var angular=require('angular'); angular.module('templateCache', []).run(['$templateCache', function($templateCache) {$templateCache.put("actors.html","<div class=\"actors-block\">\r\n    <div class=\"actor-image-wrapper\" ng-repeat=\"actor in actors track by $index\">\r\n        {{(hotkeys.enabled?$index+1:\"\")}}\r\n        <img actor-image ng-src=\"{{actor.image}}\" ng-class=\"{\'actor-image-not-selected\':!isActorSelected(actor)}\" />\r\n    </div>\r\n</div>\r\n");
+$templateCache.put("banners.html","<button ng-repeat=\"bannerButton in bannerButtons track by $index\" banner-button class=\"banner-button\">{{bannerButton.title}}</button>\r\n<button custom-banner-button class=\"banner-button custom\">Custom</button>\r\n");
+$templateCache.put("home.html","<app-banners></app-banners>\r\n<app-actors></app-actors>\r\n<quote-input></quote-input>\r\n<app-hotkey-toggle-button></app-hotkey-toggle-button>\r\n");
+$templateCache.put("hotkeys.html","<button class=\"banner-button hotkeys-button\">{{text}}</button>\r\n");
+$templateCache.put("quote-input.html","<div class=\"type-transcribe\" placeholder=\"\" contentEditable=\"true\"></div>\r\n");}]);

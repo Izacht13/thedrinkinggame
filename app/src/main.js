@@ -9986,14 +9986,14 @@
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/node_modules/angular/angular.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/node_modules/angular/angular.js
 },{}],2:[function(require,module,exports){
 "use strict";
 require('./angular');
 module.exports = angular;
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/node_modules/angular/index.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/node_modules/angular/index.js
 },{"./angular":1}],3:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
@@ -12934,7 +12934,7 @@ angular.module("actors", []).factory("actors", function() {
 }]);
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/actors.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/actors.js
 },{"angular":2}],7:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -12943,7 +12943,7 @@ require("./templateCache");
 require("angular").module("app", ["home", "templateCache"]);
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/app.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/app.js
 },{"./home":9,"./templateCache":13,"angular":2}],8:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -13040,7 +13040,7 @@ require("angular").module("banners", ["submiter"]).directive("appBanners", funct
 }]);
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/banners.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/banners.js
 },{"./submiter":12,"angular":2}],9:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -13057,7 +13057,7 @@ require("angular").module("home", ["actors", "banners", "hotkeys", "quoteInput"]
 });
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/home.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/home.js
 },{"./actors":6,"./banners":8,"./hotkeys":10,"./quote-input":11,"./submiter":12,"angular":2}],10:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -13082,7 +13082,7 @@ require("angular").module("hotkeys", []).directive("appHotkeyToggleButton", ["ho
 });
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/hotkeys.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/hotkeys.js
 },{"angular":2}],11:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -13130,7 +13130,7 @@ require("angular").module("quoteInput", ["submiter", "actors", "banners", "hotke
 }]);
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/quote-input.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/quote-input.js
 },{"./actors":6,"./banners":8,"./hotkeys":10,"./submiter":12,"angular":2}],12:[function(require,module,exports){
 "use strict";
 "use strict";
@@ -13169,7 +13169,7 @@ require("angular").module("submiter", ["actors"]).factory("submiter", ["actors",
 }]);
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/submiter.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/submiter.js
 },{"./actors":6,"angular":2}],13:[function(require,module,exports){
 "use strict";
 var angular = require('angular');
@@ -13182,11 +13182,11 @@ angular.module('templateCache', []).run(['$templateCache', function($templateCac
 }]);
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/templateCache.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/angular-modules/templateCache.js
 },{"angular":2}],14:[function(require,module,exports){
 "use strict";
 require("./angular-modules/app");
 
 
-//# sourceURL=C:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/main.js
+//# sourceURL=c:/Users/Spencer/Documents/GitHub/thedrinkinggame/src/main.js
 },{"./angular-modules/app":7}]},{},[14,5]);
