@@ -48,6 +48,22 @@ gulp.task('watch', function() {
   }
 });
 
+require("./buildscripts/electronTasks.js");
+
 gulp.task('default', ['scripts', 'sass', 'watch']);
 
-gulp.task("transcribe", ["default"]);
+var exec = require('child_process').exec
+
+gulp.task("both", ["default"], function(){
+    argv.watch=false;
+    var gulpCmd=path.join(__dirname, 'node_modules/.bin',"gulp"),
+        buildProjection = (!argv.projection)?" --projection":"";
+    exec(gulpCmd+buildProjection, function (error, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        if (error !== null) {
+          console.log('exec error: ' + error);
+        }
+    });
+});
+
