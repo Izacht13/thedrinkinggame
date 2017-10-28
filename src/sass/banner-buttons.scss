@@ -3,37 +3,37 @@
 .banner-button{
   @extend global-font;
   outline: 0;
-  background:black;
-  border:none;
-  border-radius:20px;
-  min-width:70px;
-  height:50px;
-  margin:10px;
-  cursor:pointer;
-  font-size:15px;
-  margin-left:5px;
-  margin-right:5px;
-  color:white;
-  -webkit-transition: background 0.3s, color 0.1s;
-  transition: background 0.3s, color 0.1s;
-  opacity:0.7;
-  padding-left:10px;
-  padding-right:10px;
+  background: #121212;
+  border: none;
+  border-radius: 20px;
+  min-width: 70px;
+  height: 50px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  color: #eee;
+  -webkit-transition: background 0.35s, color 0.15s;
+  transition: background 0.35s, color 0.15s;
+  opacity: 0.75;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .banner-button:active{
-  color:orange;
+  color: #FF9000;
 }
 
 .banner-button.custom{
- background:blue;
+ background: #1447BC;
 }
 
 .banner-button:hover{
-  background:orange;
+  background: #FF9000;
 }
 
 .cancel-button.custom{
-  background:red;
+  background: #DD2525;
 }
 
